@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/theme-config.js"></script>
+    <script src="/js/theme.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-200">
+    <div class=" bg-white dark:bg-gray-800 shadow-lg" style="width: 20rem">
+      <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+        <img src="/img/mahlat-logo.png" style="width: 75%;" alt="Mahlat Logo">
+      </div>
+        <nav class="mt-4">
+          <a href="/admin/dashboard.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-home-line text-lg mr-3 text-primary"></i> Home
+          </a>
+          <a href="../products/index.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-shopping-cart-line text-lg mr-3 text-primary"></i> Products
+          </a>
+          <a href="../orders/index.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-file-list-3-line text-lg mr-3 text-primary"></i> Orders
+          </a>
+          <a href="../getUsers/index.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-user-line text-lg mr-3 text-primary"></i> Customers
+          </a>
+          <a href="../categories/index.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-price-tag-3-line text-lg mr-3 text-primary"></i> Categories
+          </a>
+          <a href="../addzone/addzone.html" class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-pin-distance-line text-lg mr-3 text-primary"></i></i> Zones
+          </a>
+          <a href="../banners/index.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-layout-masonry-line text-lg mr-3 text-primary"></i> Banners
+          </a>
+          <a href="../settings/index.html"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300">
+            <i class="ri-settings-3-line text-lg mr-3 text-primary"></i> Settings
+          </a>
+          <a onclick="handleLogout()"
+            class="flex items-center py-3 px-4 rounded-lg hover:bg-primary/10 dark:hover:bg-gray-700 transition duration-200 text-gray-700 dark:text-gray-300 cursoer-pointer-l">
+            <i class="ri-logout-box-line text-lg mr-3 text-primary"></i> Logout
+          </a>
+    
+        </nav>
+      </div>
+      
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 shadow-md py-6 px-6 border-b border-gray-200 dark:border-gray-700">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white flex items-center">
+                <i class="ri-price-tag-3-line text-primary text-3xl mr-2"></i>
+                Categories
+            </h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- Categories Grid -->
+            <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="categories-grid">
+               
+            </div> -->
+
+            <!-- Add Category Button (Fixed at bottom) -->
+            <!-- <div class="fixed bottom-6 right-6">
+                <button onclick="openAddModal()" 
+                    class="group bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full shadow-lg flex items-center space-x-2 transition-all duration-200 hover:scale-105">
+                    <i class="ri-add-line text-xl"></i>
+                    <span class="font-medium">Add New Category</span>
+                    <div class="absolute inset-0 bg-white rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-200"></div>
+                </button>
+            </div> -->
+
+            <!-- Add/Edit Category Modal -->
+            <!-- <div id="categoryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white" id="modalTitle">Add New Category</h3>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                <i class="ri-close-line text-2xl"></i>
+                            </button>
+                        </div>
+                        
+                        <form id="categoryForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Category Name
+                                </label>
+                                <input type="text" id="categoryName" required
+                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-white"
+                                    placeholder="Enter category name">
+                            </div>
+
+                            <div class="flex justify-end space-x-3 mt-6">
+                                <button type="button" onclick="closeModal()"
+                                    class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition duration-200">
+                                    Cancel
+                                </button>
+                                <button type="submit"
+                                    class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition duration-200">
+                                    Save Category
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main> -->
+
+    <main class="flex-1 p-6">
+      <!-- Categories Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6" id="categories-grid">
+        <!-- Categories will be populated here -->
+      </div>
+    
+      <!-- Add Category Button -->
+      <div class="fixed bottom-6 right-6">
+        <button onclick="openAddModal()" 
+          class="group bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full shadow-lg flex items-center space-x-2 transition-all duration-200 hover:scale-105">
+          <i class="ri-add-line text-xl"></i>
+          <span class="font-medium">Add New Category</span>
+          <div class="absolute inset-0 bg-white rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-200"></div>
+        </button>
+      </div>
+    
+      <!-- Add/Edit Category Modal -->
+      <div id="categoryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-white" id="modalTitle">Add New Category</h3>
+              <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                <i class="ri-close-line text-2xl"></i>
+              </button>
+            </div>
+    
+            <form id="categoryForm" class="space-y-4" enctype="multipart/form-data">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Category Name
+                </label>
+                <input type="text" id="categoryName" required
+                  class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-white"
+                  placeholder="Enter category name">
+              </div>
+    
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Upload Image
+                </label>
+                <input type="file" id="categoryImage"
+                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+              </div>
+    
+              <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" onclick="closeModal()"
+                  class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition duration-200">
+                  Cancel
+                </button>
+                <button type="submit"
+                  class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition duration-200">
+                  Save Category
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+        
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-800 shadow-md py-4 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+            &copy; 2025 Categories Dashboard. All rights reserved.
+        </footer>
+    </div>
+
+    
+    <script>
+      const apiBaseUrl = '/api/categories';
+      let categories = [];
+      let editingCategoryId = null;
+    
+      // Fetch categories from server
+      async function fetchCategories() {
+        try {
+          const res = await fetch(apiBaseUrl);
+          const data = await res.json();
+          if (data.success) {
+            categories = data.categories;
+            renderCategories();
+          }
+        } catch (err) {
+          console.error('Error fetching categories:', err);
+        }
+      }
+    
+      // Render categories and subcategories
+      function renderCategories() {
+        const grid = document.getElementById('categories-grid');
+        grid.innerHTML = '';
+    
+        categories.forEach(category => {
+          const card = document.createElement('div');
+          card.className = 'bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300';
+    
+          card.innerHTML = `
+            <div class="relative">
+              <img src="/public/uploads/categories/${category.image || 'placeholder.jpg'}" alt="${category.name}" class="w-full h-48 object-cover rounded-lg mb-3">
+              <div class="absolute top-3 right-3 text-white">
+                <button onclick="openAddModal('${category._id}')" class="bg-green-500 hover:bg-green-600 text-sm px-3 py-1 rounded-lg">
+                  Add Subcategory
+                </button>
+              </div>
+            </div>
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">${category.name}</h2>
+            ${renderSubCategories(category.subcategories || [], category._id)}
+            <div class="flex justify-between mt-4">
+              <div class="space-x-2">
+                <button onclick="openEditModal('${category._id}', '${category.name}')" class="text-blue-500 text-lg">
+                  <i class="ri-edit-line"></i>
+                </button>
+                <button onclick="deleteCategory('${category._id}')" class="text-red-500 text-lg">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+            </div>
+          `;
+    
+          grid.appendChild(card);
+        });
+      }
+    
+      // Recursive render for subcategories and sub-subcategories
+      function renderSubCategories(subs, parentId) {
+        return subs.map(sub => `
+          <div class="ml-6 mt-2 border-l-2 border-gray-300 pl-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <strong>${sub.name}</strong><br/>
+                ${sub.image ? `<img src="/public/uploads/categories/${sub.image}" alt="${sub.name}" class="w-20 h-20 object-cover rounded mt-1"/>` : ''}
+              </div>
+              <div class="space-x-2">
+                <button onclick="openAddModal('${sub._id}')" class="text-sm text-green-600">+Sub</button>
+                <button onclick="openEditModal('${sub._id}', '${sub.name}')" class="text-blue-500"><i class="ri-edit-line"></i></button>
+                <button onclick="deleteCategory('${sub._id}')" class="text-red-500"><i class="ri-delete-bin-line"></i></button>
+              </div>
+            </div>
+            ${sub.subcategories ? renderSubCategories(sub.subcategories, sub._id) : ''}
+          </div>
+        `).join('');
+      }
+    
+      // Modal handlers
+      function openAddModal(parentId = '') {
+        document.getElementById('categoryModal').classList.remove('hidden');
+        document.getElementById('modalTitle').innerText = parentId ? 'Add Subcategory' : 'Add Category';
+        document.getElementById('categoryName').value = '';
+        document.getElementById('categoryImage').value = '';
+        document.getElementById('categoryForm').dataset.parentId = parentId;
+        editingCategoryId = null;
+      }
+    
+      function openEditModal(id, name) {
+        editingCategoryId = id;
+        document.getElementById('modalTitle').innerText = 'Edit Category';
+        document.getElementById('categoryName').value = name;
+        document.getElementById('categoryImage').value = '';
+        document.getElementById('categoryModal').classList.remove('hidden');
+        document.getElementById('categoryForm').dataset.parentId = '';
+      }
+    
+      function closeModal() {
+        document.getElementById('categoryModal').classList.add('hidden');
+      }
+    
+      // Save Category/Subcategory (Add or Edit)
+      document.getElementById('categoryForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+    
+        const name = document.getElementById('categoryName').value.trim();
+        const imageFile = document.getElementById('categoryImage').files[0];
+        const parentId = e.target.dataset.parentId || null;
+    
+        if (!name) return alert('Enter a category name');
+    
+        const formData = new FormData();
+        formData.append('name', name);
+        if (imageFile) formData.append('image', imageFile);
+        if (parentId) formData.append('parentId', parentId);
+    
+        let url = apiBaseUrl;
+        let method = 'POST';
+    
+        if (editingCategoryId) {
+          url = `${apiBaseUrl}/${editingCategoryId}`;
+          method = 'PUT';
+        }
+    
+        try {
+          const res = await fetch(url, {
+            method,
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            closeModal();
+            fetchCategories();
+          } else {
+            alert('Error saving category');
+          }
+        } catch (err) {
+          console.error('Save error:', err);
+          alert('Server error!');
+        }
+      });
+    
+      // Delete category
+      async function deleteCategory(id) {
+        if (!confirm('Are you sure?')) return;
+        try {
+          const res = await fetch(`${apiBaseUrl}/${id}`, { method: 'DELETE' });
+          const data = await res.json();
+          if (data.success) fetchCategories();
+          else alert('Delete failed');
+        } catch (err) {
+          console.error('Delete error:', err);
+          alert('Server error');
+        }
+      }
+    
+      // Load categories on page load
+      fetchCategories();
+    </script>
+    
+      
+    <script src="scripts/script.js"></script>
+
+</body>
+</html> 

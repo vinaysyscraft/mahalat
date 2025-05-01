@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build
+dist/
+build/
+
+# OS
+Thumbs.db
