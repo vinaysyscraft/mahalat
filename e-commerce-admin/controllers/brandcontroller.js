@@ -32,14 +32,20 @@ exports.updateBrand = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
-    const brand = await Brand.findById(id);
+    console.log('Update brand ID:', id);
+    console.log('Received name:', name);
+    console.log('Received file:', req.file);
 
+    const brand = await Brand.findById(id);
     if (!brand) return res.status(404).json({ success: false, message: 'Brand not found' });
 
     if (req.file) {
-      // Delete old image
-      if (brand.image) {
-        fs.unlinkSync(path.join(__dirname, '..', 'public', 'uploads', 'brands', brand.image));
+      const oldImagePath = path.join(__dirname, '..', 'public', 'uploads', 'brands', brand.image);
+      console.log('Old image path:', oldImagePath);
+
+      // Delete old image if it exists
+      if (brand.image && fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
       }
       brand.image = req.file.filename;
     }
@@ -49,9 +55,11 @@ exports.updateBrand = async (req, res) => {
 
     res.json({ success: true, brand });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Server Error' });
+    console.error('Update Brand Error:', err); // This is key
+    res.status(500).json({ success: false, message: 'Server Error', error: err.message });
   }
 };
+
 
 // Delete
 exports.deleteBrand = async (req, res) => {
