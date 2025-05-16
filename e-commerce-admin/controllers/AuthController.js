@@ -182,7 +182,7 @@ exports.getUsers = async (req, res) => {
 // Update user by ID
 exports.updateUser = async (req, res) => {
     try {
-        const { name, email, password, isLogged } = req.body;
+        const { name, email, password, isLogged, image } = req.body;
         const userId = req.params.id;
 
         // Validate input
@@ -208,6 +208,11 @@ exports.updateUser = async (req, res) => {
             email,
             isLogged: isLogged === 'true' || isLogged === true
         };
+        
+        if (image) {
+            updateData.image = image; // could be a URL or base64 string
+        }
+
 
         // If password is provided, hash it
         if (password && password.trim() !== '') {
@@ -235,7 +240,6 @@ exports.updateUser = async (req, res) => {
         });
     }
 };
-
 // Delete user by ID
 exports.deleteUser = async (req, res) => {
     try {
