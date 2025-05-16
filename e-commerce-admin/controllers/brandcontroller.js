@@ -20,7 +20,22 @@ exports.createBrand = async (req, res) => {
 // Read All
 exports.getAllBrands = async (req, res) => {
   try {
-    const brands = await Brand.find();
+    console.log('Fetching brands...');
+
+    const allbrands = await Brand.find();
+    const brands = await Promise.all(
+      allbrands.map(async (brand) => {
+        const products = await Product.find({ brand: brand._id })
+          .populate('category', 'name')
+          .populate('subcategory', 'name')
+          .populate('subsubcategory', 'name')
+          .populate('brand', 'name');
+        return {
+          ...brand.toObject(),
+          products,
+        };
+      })
+    );
     res.json({ success: true, brands });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server Error' });
