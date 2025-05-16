@@ -5,16 +5,31 @@ exports.getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find().sort({ level: 1, name: 1 });
 
-        const buildTree = (parentId = null) => {
-            return categories
-                .filter(cat => String(cat.parentId) === String(parentId))
-                .map(cat => ({
-                    ...cat._doc,
-                    subcategories: buildTree(cat._id)
-                }));
+        const buildTree = async (parentId = null) => {
+            const nodes = categories.filter(cat => String(cat.parentId) === String(parentId));
+
+            return Promise.all(
+                nodes.map(async (cat) => {
+                    // Fetch products for this category
+                    const products = await Product.find({ category: cat._id })
+                        .populate('category', 'name image')
+                        .populate('subcategory', 'name image')
+                        .populate('subsubcategory', 'name image')
+                        .populate('brand', 'name image');
+
+                    // Recursively build subcategories
+                    const subcategories = await buildTree(cat._id);
+
+                    return {
+                        ...cat._doc,
+                        products,
+                        subcategories
+                    };
+                })
+            );
         };
 
-        const categoryTree = buildTree(null);
+        const categoryTree = await buildTree(null);
 
         res.json({
             success: true,
@@ -28,7 +43,6 @@ exports.getAllCategories = async (req, res) => {
         });
     }
 };
-
 // Create new category
 exports.createCategory = async (req, res) => {
     try {
