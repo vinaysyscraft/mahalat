@@ -132,11 +132,12 @@ exports.getProfile = async (req, res) => {
             return res.status(404).json({ status: 'error', message: 'User not found' });
         }
 
-        res.json({ status: 'success', data: { name: user.name, email: user.email } });
+        res.json({ status: 'success', data: { name: user.name, email: user.email, image: user.image } });
     } catch (err) {
         res.status(500).json({ status: 'error', message: 'Internal server error' });
     }
 };
+
 
 // Logout
 exports.logout = async (req, res) => {
