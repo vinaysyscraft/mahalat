@@ -360,6 +360,12 @@ function setupDragAndDrop() {
     const dt = e.dataTransfer;
     const files = dt.files;
     imageInput.files = files;
+
+    if (files[0] && files[0].size > 512000) {
+      showAlert('Image size must be less than or equal to 500KB', 'error');
+      imageInput.value = ''; // Optional: clear input
+      return;
+    }
     
     if (files[0]) {
       const reader = new FileReader();
