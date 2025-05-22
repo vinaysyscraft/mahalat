@@ -330,12 +330,14 @@ async function editProduct(id) {
         loadSubsubcategories(selectedSubcategory.subcategories);
       }
     }
+    var formattedPriceEdit = Number(product.price).toLocaleString('en-IN');
+    var formattedSalePriceEdit = Number(product.salePrice).toLocaleString('en-IN');
 
     document.getElementById('edit-subcategory').value = product.subcategory._id;
     document.getElementById('edit-subsubcategory').value = product.subsubcategory ? product.subsubcategory._id : '';
     document.getElementById('edit-description').value = product.description;
-    document.getElementById('edit-price').value = product.price;
-    document.getElementById('edit-salePrice').value = product.salePrice || '';
+    document.getElementById('edit-price').value = formattedPriceEdit;
+    document.getElementById('edit-salePrice').value = formattedSalePriceEdit || '';
     document.getElementById('edit-stock').value = product.stock;
     document.getElementById('edit-brand').value = product.brand || '';
     document.getElementById('edit-productSku').value = product.productSku || '';
@@ -365,8 +367,8 @@ async function editProduct(id) {
         formData.append('subcategory', document.getElementById('edit-subcategory').value);
         formData.append('subsubcategory', document.getElementById('edit-subsubcategory').value || ''); // ✅ Add this line
         formData.append('description', document.getElementById('edit-description').value);
-        formData.append('price', document.getElementById('edit-price').value);
-        formData.append('salePrice', document.getElementById('edit-salePrice').value || '');
+        formData.append('price', document.getElementById('edit-price').value.replace(/,/g, ''));
+        formData.append('salePrice', document.getElementById('edit-salePrice').value.replace(/,/g, '') || '');
         formData.append('stock', document.getElementById('edit-stock').value);
         formData.append('brand', document.getElementById('edit-brand').value || ''); // ✅ Add this line
         formData.append('productSku', document.getElementById('edit-productSku').value || ''); // ✅ Add this line
