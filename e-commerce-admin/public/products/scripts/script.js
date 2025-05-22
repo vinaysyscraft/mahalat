@@ -131,9 +131,10 @@ function filterProducts() {
 // Display products function
 function displayProducts(products) {
   const productList = document.getElementById('product-list');
+    
+  productList.innerHTML = products.map(product =>{
     var formattedPriceView = Number(product.price).toLocaleString('en-IN');
     var formattedSalePriceView = Number(product.salePrice).toLocaleString('en-IN');
-  productList.innerHTML = products.map(product =>{
     return `
   <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
   <td class="py-4 px-4">
