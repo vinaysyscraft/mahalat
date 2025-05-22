@@ -222,7 +222,18 @@ async function loadBrands() {
 async function editProduct(id) {
   const modal = document.getElementById('edit-product-modal');
   const form = document.getElementById('edit-product-form');
+  const priceInput = document.getElementById('edit-price');
+  const salePriceInput = document.getElementById('edit-salePrice');
 
+  priceInput.addEventListener('input', function () {
+    // Remove anything that's not a digit or comma
+    this.value = this.value.replace(/[^0-9,]/g, '');
+  });
+  salePriceInput.addEventListener('input', function () {
+    // Remove anything that's not a digit or comma
+    this.value = this.value.replace(/[^0-9,]/g, '');
+  });
+  
   try {
     const token = localStorage.getItem('adminToken');
 
