@@ -131,8 +131,10 @@ function filterProducts() {
 // Display products function
 function displayProducts(products) {
   const productList = document.getElementById('product-list');
-
-  productList.innerHTML = products.map(product => `
+    var formattedPriceView = Number(product.price).toLocaleString('en-IN');
+    var formattedSalePriceView = Number(product.salePrice).toLocaleString('en-IN');
+  productList.innerHTML = products.map(product =>{
+    return `
   <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
   <td class="py-4 px-4">
     <img src="/uploads/products/${product.image}" alt="${product.name}" class="product-image">
@@ -146,10 +148,10 @@ function displayProducts(products) {
     ${product.subsubcategory?.name || 'No Sub-Subcategory'}
   </td>
   
-  <td class="py-4 px-4 text-gray-900 dark:text-gray-300">IQD ${product.price || 0}</td>
+  <td class="py-4 px-4 text-gray-900 dark:text-gray-300">IQD ${formattedPriceView || 0}</td>
   
   <td class="py-4 px-4 text-gray-900 dark:text-gray-300">
-    ${product.salePrice !== null && product.salePrice !== undefined ? `IQD ${product.salePrice}` : 'N/A'}
+    ${product.salePrice !== null && product.salePrice !== undefined ? `IQD ${formattedSalePriceView}` : 'N/A'}
   </td>
   
   <td class="py-4 px-4 text-gray-900 dark:text-gray-300">
@@ -175,7 +177,8 @@ function displayProducts(products) {
   </td>
 </tr>
 
-  `).join('');
+  `
+  }).join('');
 }
 
 
